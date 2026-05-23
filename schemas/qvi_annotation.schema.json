@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "required": [
+    "scene_id",
+    "overall_queer_visibility_score",
+    "overall_confidence",
+    "environment_type",
+    "objects_detected",
+    "inclusive_infrastructure",
+    "commercial_queer_signals",
+    "symbolic_visibility",
+    "streetscape_context",
+    "evidence_summary"
+  ],
+  "properties": {
+    "scene_id": {
+      "type": "string"
+    },
+    "overall_queer_visibility_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "overall_confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "environment_type": {
+      "type": "string"
+    },
+    "objects_detected": {
+      "type": "array"
+    },
+    "inclusive_infrastructure": {
+      "type": "object"
+    },
+    "commercial_queer_signals": {
+      "type": "object"
+    },
+    "symbolic_visibility": {
+      "type": "object"
+    },
+    "streetscape_context": {
+      "type": "object"
+    },
+    "evidence_summary": {
+      "type": "array"
+    }
+  }
+}

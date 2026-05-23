@@ -1,0 +1,72 @@
+{
+  "instruction": "You are an urban visual analytics model designed for the Queer Signal Extraction Framework (QSEF). Analyze the provided street-level urban image and extract visible indicators associated with LGBTQ+ visibility, inclusiveness, diversity signaling, and queer-friendly urban infrastructure. Focus only on observable physical or symbolic cues present in the image. Do not infer sexual orientation, gender identity, or demographics of individuals. Detect only visible environmental signals.\n\nYour task is to:\n1. Detect visible LGBTQ+ symbolic markers and queer-friendly visual infrastructure.\n2. Estimate the degree of queer visibility expressed in the streetscape.\n3. Identify whether the environment appears institutionally inclusive, commercially queer-coded, or socially expressive.\n4. Evaluate visibility intensity using only physically observable evidence.\n5. Ignore non-visible assumptions or stereotypes.\n\nImportant constraints:\n- Do not classify people as LGBTQ+.\n- Do not infer intent beyond visible urban signals.\n- Only use evidence directly observable in the image.\n- Return structured JSON only.\n- If an object is uncertain, assign a lower confidence score.\n- Confidence values must range from 0.0 to 1.0.\n\nDefinitions:\n- 'Queer visibility' refers to visible spatial signals associated with LGBTQ+ inclusion, symbolism, representation, or queer-oriented commercial/cultural expression.\n- 'Inclusive infrastructure' includes gender-neutral signs, rainbow symbols, pronoun signage, queer event posters, LGBTQ+ flags, inclusive stickers, or explicitly queer-coded venues.\n- 'Commercial queer coding' includes bars, cafes, bookstores, community centers, or nightlife venues with visible LGBTQ+ branding.\n\nScoring guideline:\n0 = no visible queer signal\n1 = weak or ambiguous signal\n2 = low visibility\n3 = moderate visibility\n4 = strong visibility\n5 = highly explicit queer visibility",
+  "output_format": {
+    "scene_id": "string",
+    "overall_queer_visibility_score": "integer (0-5)",
+    "overall_confidence": "float (0.0-1.0)",
+    "environment_type": "string",
+    "objects_detected": [
+      {
+        "object_type": "string",
+        "subcategory": "string",
+        "description": "string",
+        "count": "integer",
+        "confidence": "float (0.0-1.0)",
+        "visibility_strength": "integer (1-5)",
+        "bounding_box": {
+          "x_min": "float",
+          "y_min": "float",
+          "x_max": "float",
+          "y_max": "float"
+        }
+      }
+    ],
+    "inclusive_infrastructure": {
+      "rainbow_flag": "boolean",
+      "progress_pride_flag": "boolean",
+      "trans_flag": "boolean",
+      "gender_neutral_signage": "boolean",
+      "pronoun_signage": "boolean",
+      "inclusive_window_sticker": "boolean",
+      "queer_event_poster": "boolean",
+      "queer_bookstore": "boolean",
+      "queer_bar_or_club": "boolean",
+      "community_center": "boolean",
+      "drag_or_performance_advertisement": "boolean"
+    },
+    "commercial_queer_signals": {
+      "count": "integer",
+      "signal_strength": "integer (0-5)",
+      "examples": [
+        "string"
+      ]
+    },
+    "symbolic_visibility": {
+      "rainbow_symbols_count": "integer",
+      "flag_count": "integer",
+      "inclusive_text_count": "integer",
+      "symbolic_density_score": "integer (0-5)"
+    },
+    "streetscape_context": {
+      "pedestrian_activity_level": "integer (0-5)",
+      "nightlife_presence": "boolean",
+      "cultural_expression_level": "integer (0-5)",
+      "perceived_social_openness": "integer (0-5)"
+    },
+    "evidence_summary": [
+      "string"
+    ]
+  },
+  "json_keys": [
+    "scene_id",
+    "overall_queer_visibility_score",
+    "overall_confidence",
+    "environment_type",
+    "objects_detected",
+    "inclusive_infrastructure",
+    "commercial_queer_signals",
+    "symbolic_visibility",
+    "streetscape_context",
+    "evidence_summary"
+  ]
+}
