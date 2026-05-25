@@ -30,12 +30,12 @@ class ImageManifestRecord:
     heading: int
     pitch: int
     fov: int
-    scale: int = 2
     captured_at: str | None
     file_path: str
     status: str = "pending"
     error_message: str | None = None
     image_url: str | None = None
+    scale: int = 2
 
 
 def load_env_file(path: Path | None = None) -> None:
