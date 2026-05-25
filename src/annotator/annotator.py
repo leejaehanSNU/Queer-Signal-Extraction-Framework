@@ -469,10 +469,19 @@ def run_annotator(args: argparse.Namespace) -> int:
     schema = load_schema(schema_path)
     manifest_records = load_manifest(manifest_path)
     logger = logging.getLogger("annotator.run")
-    output_jsonl.unlink(missing_ok=True)
-    output_table.unlink(missing_ok=True)
     batches = iter_batches(manifest_records, args.batch_size)
+    start_batch_number = max(1, int(getattr(args, "start_batch_number", 1)))
+    if start_batch_number == 1:
+        output_jsonl.unlink(missing_ok=True)
+        output_table.unlink(missing_ok=True)
+    elif output_jsonl.exists():
+        logger.info("Resuming from batch %s using existing output file %s", start_batch_number, output_jsonl)
+    else:
+        logger.info("Starting from batch %s with a fresh output file", start_batch_number)
     for batch_index, batch in enumerate(batches, start=1):
+        if batch_index < start_batch_number:
+            logger.info("Skipping batch %s/%s", batch_index, len(batches))
+            continue
         logger.info("Processing batch %s/%s with %s images", batch_index, len(batches), len(batch))
         batch_annotations = process_annotation_batch(
             batch=batch,
@@ -498,6 +507,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--schema-path", required=True, help="JSON schema that constrains the model output.")
     parser.add_argument("--batch-size", type=int, default=8, help="Number of images or image groups sent per batch.")
     parser.add_argument("--temperature", type=float, default=0.0, help="Generation temperature for the LM call.")
+    parser.add_argument("--start-batch-number", type=int, default=1, help="1-based batch number to start processing from.")
     parser.add_argument("--output-jsonl", required=True, help="Path for raw image-level QVI annotations in JSONL format.")
     parser.add_argument("--output-table", required=True, help="Path for the segment-level summary table.")
     parser.add_argument("--api-key", help="Gemini API key. Defaults to GEMINI_API_KEY, GOOGLE_GENAI_API_KEY, GOOGLE_API_KEY, or GOOGLE_STREET_VIEW_API_KEY in .env.")

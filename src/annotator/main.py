@@ -54,6 +54,12 @@ def build_main_parser() -> argparse.ArgumentParser:
         help="Gemini generation temperature.",
     )
     parser.add_argument(
+        "--start-batch-number",
+        type=int,
+        default=1,
+        help="1-based batch number to start annotator processing from.",
+    )
+    parser.add_argument(
         "--output-jsonl",
         default="/Users/jhmac/Library/Mobile Documents/com~apple~CloudDocs/서울대학교/2026 LQBTQWalkability/QueerSignalExtraction/outputs/annotations/qvi_annotations.jsonl",
         help="Path for raw image-level QVI annotations.",
@@ -98,6 +104,8 @@ def main() -> int:
                 str(args.batch_size),
                 "--temperature",
                 str(args.temperature),
+                "--start-batch-number",
+                str(args.start_batch_number),
                 "--output-jsonl",
                 args.output_jsonl,
                 "--output-table",
